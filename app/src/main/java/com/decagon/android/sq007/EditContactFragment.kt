@@ -68,8 +68,6 @@ class EditContactFragment : Fragment(R.layout.fragment_edit_contact) {
         }
     }
 
-
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 

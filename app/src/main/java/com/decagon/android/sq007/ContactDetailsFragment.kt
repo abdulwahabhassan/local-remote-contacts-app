@@ -37,7 +37,7 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
             binding!!.tvId.text = bundle.getString("bundleKey").toString()
         }
 
-        binding!!.ivCall.setOnClickListener{
+        binding!!.ivCall.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(binding!!.tvContactPhoneNumber.text as String?)))
             startActivity(intent)
         }
@@ -49,7 +49,6 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
                 replace<EditContactFragment>(R.id.fragment_container_view)
                 addToBackStack(null)
             }
-
 
             // SetResult for EditContactFragment
             setFragmentResult("nameKey", bundleOf("bundleKey" to binding!!.tvContactName.text))
@@ -63,7 +62,7 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
             val phone = binding!!.tvContactPhoneNumber.text.toString()
             val shareIntent = Intent().apply {
                 this.action = Intent.ACTION_SEND
-                this.putExtra(Intent.EXTRA_TEXT, "$name\n$phone" )
+                this.putExtra(Intent.EXTRA_TEXT, "$name\n$phone")
                 this.type = "text/plain"
             }
             startActivity(shareIntent)
@@ -93,7 +92,6 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
 //        startActivity(Intent.createChooser(shareIntent, "share data"))
 //
 //    }
-
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)

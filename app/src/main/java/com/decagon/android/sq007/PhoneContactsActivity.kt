@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -25,8 +24,6 @@ class PhoneContactsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_phone_contacts)
         recyclerView = findViewById(R.id.recycler_view)
         checkPermission()
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
