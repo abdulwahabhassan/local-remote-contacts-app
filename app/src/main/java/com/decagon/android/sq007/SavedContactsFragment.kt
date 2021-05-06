@@ -72,8 +72,6 @@ class SavedContactsFragment : Fragment(R.layout.fragment_saved_contacts), SavedC
         val phone = arrayList[position].contactNumber
         val id = arrayList[position].id
 
-        println(id)
-
         parentFragmentManager.commit {
             setReorderingAllowed(true)
             replace<ContactDetailsFragment>(R.id.fragment_container_view)

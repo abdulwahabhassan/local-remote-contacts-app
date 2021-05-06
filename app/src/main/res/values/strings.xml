@@ -4,5 +4,6 @@
     <string name="phone_hint">Phone Number</string>
     <string name="name_hint">Name</string>
     <string name="place_holder">placeholderText</string>
+    <string name="local_contacts">Local Contacts</string>
 
 </resources>

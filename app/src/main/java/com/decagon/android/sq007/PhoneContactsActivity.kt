@@ -1,9 +1,12 @@
 package com.decagon.android.sq007
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -22,6 +25,24 @@ class PhoneContactsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_phone_contacts)
         recyclerView = findViewById(R.id.recycler_view)
         checkPermission()
+
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == R.id.local_contacts_menu) {
+            val intent = Intent(this, SavedContactsActivity::class.java)
+            startActivity(intent)
+        } else {
+            return super.onOptionsItemSelected(item)
+        }
+        return true
     }
 
     private fun checkPermission() {
@@ -39,7 +60,7 @@ class PhoneContactsActivity : AppCompatActivity() {
     }
 
     private val contactList: Unit
-        private get() {
+        get() {
             val uri = ContactsContract.Contacts.CONTENT_URI
             val sort = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"
             val cursor = contentResolver.query(
@@ -71,7 +92,7 @@ class PhoneContactsActivity : AppCompatActivity() {
                                 ContactsContract.CommonDataKinds.Phone.NUMBER
                             )
                         )
-                        val model = ContactModel(name, number)
+                        val model = ContactModel(id, name, number)
 
                         arrayList.add(model)
                         phoneCursor.close()
@@ -97,7 +118,7 @@ class PhoneContactsActivity : AppCompatActivity() {
         ) {
             contactList
         } else {
-            Toast.makeText(this@PhoneContactsActivity, "Permission Denied", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this@PhoneContactsActivity, "Permission Denied", Toast.LENGTH_SHORT).show()
             checkPermission()
         }
     }

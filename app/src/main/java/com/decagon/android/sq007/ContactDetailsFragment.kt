@@ -1,5 +1,7 @@
 package com.decagon.android.sq007
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -35,6 +37,11 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
             binding!!.tvId.text = bundle.getString("bundleKey").toString()
         }
 
+        binding!!.ivCall.setOnClickListener{
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(binding!!.tvContactPhoneNumber.text as String?)))
+            startActivity(intent)
+        }
+
         binding!!.ivEdit.setOnClickListener {
 
             parentFragmentManager.commit {
@@ -43,10 +50,23 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
                 addToBackStack(null)
             }
 
+
             // SetResult for EditContactFragment
             setFragmentResult("nameKey", bundleOf("bundleKey" to binding!!.tvContactName.text))
             setFragmentResult("phoneNumberKey", bundleOf("bundleKey" to binding!!.tvContactPhoneNumber.text))
             setFragmentResult("idKey", bundleOf("bundleKey" to binding!!.tvId.text))
+        }
+
+        binding!!.ivShare.setOnClickListener {
+
+            val name = binding!!.tvContactName.text.toString()
+            val phone = binding!!.tvContactPhoneNumber.text.toString()
+            val shareIntent = Intent().apply {
+                this.action = Intent.ACTION_SEND
+                this.putExtra(Intent.EXTRA_TEXT, "$name\n$phone" )
+                this.type = "text/plain"
+            }
+            startActivity(shareIntent)
         }
 
         binding!!.ivDelete.setOnClickListener {
@@ -56,16 +76,33 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
 
             reference.child(binding!!.tvId.text.toString()).removeValue()
 
-            Toast.makeText(context, "Contact saved successfully", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Contact deleted successfully", Toast.LENGTH_SHORT).show()
             parentFragmentManager.popBackStack()
             parentFragmentManager.popBackStack()
         }
     }
 
+//    private fun shareContact() {
+//        val name = binding!!.tvContactName.text
+//        val phoneNumber = binding!!.tvContactName.text
+//
+//        val shareIntent = Intent()
+//        shareIntent.action = Intent.ACTION_SEND
+//        shareIntent.type = "text/plain"
+//        shareIntent.putExtra(Intent.EXTRA_TEXT, "$name $phoneNumber")
+//        startActivity(Intent.createChooser(shareIntent, "share data"))
+//
+//    }
+
+
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-//        binding!!.tvContactName.text =
-//        binding!!.tvContactPhoneNumber.text =
+        setFragmentResultListener("nameRequestKey") { _, bundle ->
+            binding!!.tvContactName.text = bundle.getString("bundleKey").toString()
+        }
+        setFragmentResultListener("phoneNumberRequestKey") { _, bundle ->
+            binding!!.tvContactPhoneNumber.text = bundle.getString("bundleKey").toString()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
