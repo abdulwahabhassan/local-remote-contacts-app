@@ -17,10 +17,14 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
     lateinit var rootNode: FirebaseDatabase
     lateinit var reference: DatabaseReference
 
+    lateinit var activity: SavedContactsActivity
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentContactDetailsBinding.bind(view)
+
+        activity = requireActivity() as SavedContactsActivity
 
         binding!!.tvContactName.text = savedInstanceState?.getString("name")
         binding!!.tvContactPhoneNumber.text = savedInstanceState?.getString("phone")
@@ -38,7 +42,10 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
         }
 
         binding!!.ivCall.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(binding!!.tvContactPhoneNumber.text as String?)))
+            val intent = Intent(
+                Intent.ACTION_DIAL,
+                Uri.parse("tel:" + Uri.encode(binding!!.tvContactPhoneNumber.text as String?))
+            )
             startActivity(intent)
         }
 
@@ -81,26 +88,10 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
         }
     }
 
-//    private fun shareContact() {
-//        val name = binding!!.tvContactName.text
-//        val phoneNumber = binding!!.tvContactName.text
-//
-//        val shareIntent = Intent()
-//        shareIntent.action = Intent.ACTION_SEND
-//        shareIntent.type = "text/plain"
-//        shareIntent.putExtra(Intent.EXTRA_TEXT, "$name $phoneNumber")
-//        startActivity(Intent.createChooser(shareIntent, "share data"))
-//
-//    }
-
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        setFragmentResultListener("nameRequestKey") { _, bundle ->
-            binding!!.tvContactName.text = bundle.getString("bundleKey").toString()
-        }
-        setFragmentResultListener("phoneNumberRequestKey") { _, bundle ->
-            binding!!.tvContactPhoneNumber.text = bundle.getString("bundleKey").toString()
-        }
+        binding!!.tvContactName.text = activity.name
+        binding!!.tvContactPhoneNumber.text = activity.phone
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

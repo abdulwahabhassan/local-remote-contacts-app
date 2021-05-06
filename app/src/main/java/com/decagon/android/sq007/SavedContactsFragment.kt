@@ -81,5 +81,8 @@ class SavedContactsFragment : Fragment(R.layout.fragment_saved_contacts), SavedC
         setFragmentResult("nameRequestKey", bundleOf("bundleKey" to name))
         setFragmentResult("phoneNumberRequestKey", bundleOf("bundleKey" to phone))
         setFragmentResult("idRequestKey", bundleOf("bundleKey" to id))
+
+        setFragmentResult("contactNameKey", bundleOf("bundleKey" to name))
+        setFragmentResult("contactPhoneKey", bundleOf("bundleKey" to phone))
     }
 }
