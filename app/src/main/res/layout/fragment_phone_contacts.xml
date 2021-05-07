@@ -12,6 +12,6 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="198dp"
         tools:layout_editor_absoluteY="257dp"
-        tools:listitem="@layout/item_contact"/>
+        tools:listitem="@layout/item_contact" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

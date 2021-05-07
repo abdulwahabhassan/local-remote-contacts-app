@@ -33,13 +33,7 @@ class PhoneContactsFragment : Fragment(R.layout.fragment_phone_contacts) {
         checkPermission()
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_phone_contacts)
-//        recyclerView = findViewById(R.id.recycler_view)
-//        checkPermission()
-//    }
-
+    // Checks permission to read contacts
     private fun checkPermission() {
         if (ContextCompat.checkSelfPermission(this.requireContext(), Manifest.permission.READ_CONTACTS)
             != PackageManager.PERMISSION_GRANTED
@@ -113,7 +107,6 @@ class PhoneContactsFragment : Fragment(R.layout.fragment_phone_contacts) {
         ) {
             contactList
         } else {
-//            Toast.makeText(this@PhoneContactsActivity, "Permission Denied", Toast.LENGTH_SHORT).show()
             checkPermission()
         }
     }

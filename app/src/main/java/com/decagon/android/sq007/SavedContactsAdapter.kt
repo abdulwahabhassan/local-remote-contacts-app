@@ -26,7 +26,6 @@ class SavedContactsAdapter(var arrayList: ArrayList<ContactModel>, var onSavedCo
         var tvId: TextView = itemView.findViewById(R.id.tv_id)
 
         init {
-//          this@SavedContactsAdapter.onSavedContactsListener = onSavedContactsListener
             itemView.setOnClickListener(this)
         }
 

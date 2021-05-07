@@ -43,6 +43,7 @@ class SavedContactsFragment : Fragment(R.layout.fragment_saved_contacts), SavedC
         }
     }
 
+    // Retrieves contact from database
     private fun getContactData() {
         rootNode = FirebaseDatabase.getInstance()
         reference = rootNode.getReference("contacts")
@@ -62,11 +63,13 @@ class SavedContactsFragment : Fragment(R.layout.fragment_saved_contacts), SavedC
         })
     }
 
+    // Cleans up references to views that have a tendency to cause memory leak
     override fun onDestroy() {
         super.onDestroy()
         binding = null
     }
 
+    // overrides method from OnSavedContactsListener interface in SavedContactsAdapter
     override fun onContactClick(position: Int) {
         val name = arrayList[position].fullName
         val phone = arrayList[position].contactNumber
@@ -78,11 +81,14 @@ class SavedContactsFragment : Fragment(R.layout.fragment_saved_contacts), SavedC
             addToBackStack(null)
         }
 
+        // Set result for ContactDetailsFragment
         setFragmentResult("nameRequestKey", bundleOf("bundleKey" to name))
         setFragmentResult("phoneNumberRequestKey", bundleOf("bundleKey" to phone))
         setFragmentResult("idRequestKey", bundleOf("bundleKey" to id))
 
+        // Set result for savedContactsActivity
         setFragmentResult("contactNameKey", bundleOf("bundleKey" to name))
         setFragmentResult("contactPhoneKey", bundleOf("bundleKey" to phone))
+        setFragmentResult("contactIdKey", bundleOf("bundleKey" to id))
     }
 }
