@@ -18,8 +18,8 @@ class EditContactFragment : Fragment(R.layout.fragment_edit_contact) {
     private var binding: FragmentEditContactBinding? = null
 
     // late initialization of Database references to be used later in the code
-    lateinit var rootNode: FirebaseDatabase
-    lateinit var reference: DatabaseReference
+    lateinit var firebaseDatabase: FirebaseDatabase
+    lateinit var fireBaseDatabaseReference: DatabaseReference
     lateinit var activity: SavedContactsActivity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,20 +28,20 @@ class EditContactFragment : Fragment(R.layout.fragment_edit_contact) {
         activity = requireActivity() as SavedContactsActivity
 
         // Retrieves the saved state of the screen in case of orientation changes
-        binding!!.etName.text = savedInstanceState?.getString("name") as Editable?
-        binding!!.etPhoneNumber.text = savedInstanceState?.getString("phone") as Editable?
+        binding!!.etName.text = savedInstanceState?.getString(getString(R.string.nameKey)) as Editable?
+        binding!!.etPhoneNumber.text = savedInstanceState?.getString(getString(R.string.phoneKey)) as Editable?
 
         // Listener for ContactDetailsFragment
-        setFragmentResultListener("nameKey") { _, bundle ->
-            val name = bundle.getString("bundleKey")
+        setFragmentResultListener(getString(R.string.name_key_alt)) { _, bundle ->
+            val name = bundle.getString(getString(R.string.bundleKey))
             binding!!.etName.setText(name)
         }
-        setFragmentResultListener("phoneNumberKey") { _, bundle ->
-            val phone = bundle.getString("bundleKey")
+        setFragmentResultListener(getString(R.string.phone_key_alt)) { _, bundle ->
+            val phone = bundle.getString(getString(R.string.bundleKey))
             binding!!.etPhoneNumber.setText(phone)
         }
-        setFragmentResultListener("idKey") { _, bundle ->
-            val id = bundle.getString("bundleKey")
+        setFragmentResultListener(getString(R.string.id_key_alt)) { _, bundle ->
+            val id = bundle.getString(getString(R.string.bundleKey))
             contactId = id!!
         }
 
@@ -57,18 +57,27 @@ class EditContactFragment : Fragment(R.layout.fragment_edit_contact) {
             activity.phone = phoneNumber
             activity.id = contactId
 
-            rootNode = FirebaseDatabase.getInstance()
-            reference = rootNode.getReference("contacts")
+            firebaseDatabase = FirebaseDatabase.getInstance()
+
+
+
+
+
+
+
+
+
+            fireBaseDatabaseReference = firebaseDatabase.getReference(getString(R.string.fire_base_root_node_reference))
 
             val contactModel = ContactModel(contactId, name, phoneNumber)
             if (contactModel.fullName == "" || contactModel.contactNumber == "") {
-                Toast.makeText(context, "An empty field cannot be saved", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.empty_field_warning, Toast.LENGTH_SHORT).show()
             } else {
                 if (!Utils.phoneNumberValidator(phoneNumber)) {
-                    Toast.makeText(context, "Please, enter a valid phone number", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.invalid_phone_number_warning, Toast.LENGTH_SHORT).show()
                 } else {
-                    reference.child(contactId).setValue(contactModel)
-                    Toast.makeText(context, "Contact saved successfully", Toast.LENGTH_SHORT).show()
+                    fireBaseDatabaseReference.child(contactId).setValue(contactModel)
+                    Toast.makeText(context, R.string.successful_save_msg, Toast.LENGTH_SHORT).show()
                     parentFragmentManager.popBackStack()
                 }
             }
@@ -79,8 +88,8 @@ class EditContactFragment : Fragment(R.layout.fragment_edit_contact) {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putString("name", binding!!.etName.text.toString())
-        outState.putString("phone", binding!!.etPhoneNumber.text.toString())
+        outState.putString(getString(R.string.nameKey), binding!!.etName.text.toString())
+        outState.putString(getString(R.string.phoneKey), binding!!.etPhoneNumber.text.toString())
     }
 
     // Cleans up references to views that have a tendency to cause memory leak

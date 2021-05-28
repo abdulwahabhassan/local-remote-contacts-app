@@ -6,7 +6,7 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.decagon.android.sq007.databinding.ActivitySavedContactsBinding
 
-class SavedContactsActivity : AppCompatActivity() {
+class  SavedContactsActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySavedContactsBinding
     lateinit var name: String
@@ -28,16 +28,16 @@ class SavedContactsActivity : AppCompatActivity() {
         }
         // Listens for fragment result in SavedContactsFragment
         supportFragmentManager
-            .setFragmentResultListener("contactNameKey", this) { requestKey, bundle ->
-                name = bundle.getString("bundleKey").toString()
+            .setFragmentResultListener(getString(R.string.contactNameKey), this) { _, bundle ->
+                name = bundle.getString(getString(R.string.bundleKey)).toString()
             }
         supportFragmentManager
-            .setFragmentResultListener("contactPhoneKey", this) { requestKey, bundle ->
-                phone = bundle.getString("bundleKey").toString()
+            .setFragmentResultListener(getString(R.string.contactPhoneKey), this) { _, bundle ->
+                phone = bundle.getString(getString(R.string.bundleKey)).toString()
             }
         supportFragmentManager
-            .setFragmentResultListener("contactIdKey", this) { requestKey, bundle ->
-                id = bundle.getString("bundleKey").toString()
+            .setFragmentResultListener(getString(R.string.contactIdKey), this) { _, bundle ->
+                id = bundle.getString(getString(R.string.bundleKey)).toString()
             }
     }
 }

@@ -26,6 +26,7 @@ class PhoneContactsActivity : AppCompatActivity() {
                 add<PhoneContactsFragment>(R.id.fragment_container_view)
             }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -36,7 +37,7 @@ class PhoneContactsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         // Launches savedContactsActivity when menu item is selected
-        if (item.itemId == R.id.local_contacts_menu) {
+        if (item.itemId == R.id.saved_contacts_menu) {
             val intent = Intent(this, SavedContactsActivity::class.java)
             startActivity(intent)
         } else {

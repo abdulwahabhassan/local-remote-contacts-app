@@ -13,24 +13,30 @@ import com.decagon.android.sq007.databinding.FragmentSavedContactsBinding
 import com.google.firebase.database.*
 import java.util.ArrayList
 
-class SavedContactsFragment : Fragment(R.layout.fragment_saved_contacts), SavedContactsAdapter.OnSavedContactsListener {
+class SavedContactsFragment : Fragment(R.layout.fragment_saved_contacts),
+    SavedContactsAdapter.OnSavedContactsListener {
 
     private var binding: FragmentSavedContactsBinding? = null
 
     var recyclerView: RecyclerView? = null
-    var arrayList = ArrayList<ContactModel>()
+    lateinit var arrayList: ArrayList<ContactModel>
+    lateinit var savedContactsAdapter: SavedContactsAdapter
 
     lateinit var rootNode: FirebaseDatabase
     lateinit var reference: DatabaseReference
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        arrayList = arrayListOf()
+        savedContactsAdapter = SavedContactsAdapter(arrayList, this@SavedContactsFragment)
+
+
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSavedContactsBinding.bind(view)
 
         recyclerView = binding!!.recyclerView
         recyclerView!!.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView!!.setHasFixedSize(true)
-        arrayList = arrayListOf()
+        recyclerView?.adapter = savedContactsAdapter
+
 
         getContactData()
 
@@ -54,7 +60,8 @@ class SavedContactsFragment : Fragment(R.layout.fragment_saved_contacts), SavedC
                     for (userSnapshot in snapshot.children) {
                         val contact = userSnapshot.getValue(ContactModel::class.java)
                         arrayList.add(contact!!)
-                        recyclerView!!.adapter = SavedContactsAdapter(arrayList, this@SavedContactsFragment)
+                        savedContactsAdapter.addContacts(arrayList)
+                        savedContactsAdapter.notifyDataSetChanged()
                     }
                 }
             }
@@ -82,13 +89,31 @@ class SavedContactsFragment : Fragment(R.layout.fragment_saved_contacts), SavedC
         }
 
         // Set result for ContactDetailsFragment
-        setFragmentResult("nameRequestKey", bundleOf("bundleKey" to name))
-        setFragmentResult("phoneNumberRequestKey", bundleOf("bundleKey" to phone))
-        setFragmentResult("idRequestKey", bundleOf("bundleKey" to id))
+        setFragmentResult(
+            getString(R.string.nameRequestKey),
+            bundleOf(getString(R.string.bundleKey) to name)
+        )
+        setFragmentResult(
+            getString(R.string.phoneNumberRequestKey),
+            bundleOf(getString(R.string.bundleKey) to phone)
+        )
+        setFragmentResult(
+            getString(R.string.idRequestKey),
+            bundleOf(getString(R.string.bundleKey) to id)
+        )
 
         // Set result for savedContactsActivity
-        setFragmentResult("contactNameKey", bundleOf("bundleKey" to name))
-        setFragmentResult("contactPhoneKey", bundleOf("bundleKey" to phone))
-        setFragmentResult("contactIdKey", bundleOf("bundleKey" to id))
+        setFragmentResult(
+            getString(R.string.contactNameKey),
+            bundleOf(getString(R.string.bundleKey) to name)
+        )
+        setFragmentResult(
+            getString(R.string.contactPhoneKey),
+            bundleOf(getString(R.string.bundleKey) to phone)
+        )
+        setFragmentResult(
+            getString(R.string.contactIdKey),
+            bundleOf(getString(R.string.bundleKey) to id)
+        )
     }
 }

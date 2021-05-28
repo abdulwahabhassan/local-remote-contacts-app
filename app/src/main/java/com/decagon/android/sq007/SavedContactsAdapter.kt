@@ -7,7 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.util.ArrayList
 
-class SavedContactsAdapter(var arrayList: ArrayList<ContactModel>, var onSavedContactsListener: OnSavedContactsListener) :
+class SavedContactsAdapter(
+    var arrayList: ArrayList<ContactModel>,
+    var onSavedContactsListener: OnSavedContactsListener
+) :
     RecyclerView.Adapter<SavedContactsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -20,7 +23,8 @@ class SavedContactsAdapter(var arrayList: ArrayList<ContactModel>, var onSavedCo
         return ViewHolder(view, onSavedContactsListener)
     }
 
-    inner class ViewHolder(itemView: View, var onSavedContactsListener: OnSavedContactsListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(itemView: View, var onSavedContactsListener: OnSavedContactsListener) :
+        RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var tvName: TextView = itemView.findViewById(R.id.tv_name)
         var tvNumber: TextView = itemView.findViewById(R.id.tv_number)
         var tvId: TextView = itemView.findViewById(R.id.tv_id)
@@ -32,6 +36,10 @@ class SavedContactsAdapter(var arrayList: ArrayList<ContactModel>, var onSavedCo
         override fun onClick(v: View?) {
             onSavedContactsListener.onContactClick(adapterPosition)
         }
+    }
+
+    fun addContacts(savedArrayList: ArrayList<ContactModel>) {
+        this.arrayList = savedArrayList
     }
 
     override fun onBindViewHolder(holder: SavedContactsAdapter.ViewHolder, position: Int) {

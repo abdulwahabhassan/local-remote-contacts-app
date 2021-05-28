@@ -4,6 +4,25 @@
     <string name="phone_hint">Phone Number</string>
     <string name="name_hint">Name</string>
     <string name="place_holder">placeholderText</string>
-    <string name="local_contacts">Local Contacts</string>
-
+    <string name="firebase_contacts">Saved Contacts</string>
+    <string name="empty_field_warning">An empty field cannot be saved</string>
+    <string name="invalid_phone_number_warning">Please, enter a valid phone number</string>
+    <string name="successful_save_msg">Contact saved successfully</string>
+    <string name="fire_base_root_node_reference">contacts</string>
+    <string name="nameKey">name</string>
+    <string name="phoneKey">phone</string>
+    <string name="phoneNumberRequestKey">phoneNumberRequestKey</string>
+    <string name="idRequestKey">idRequestKey</string>
+    <string name="nameRequestKey">nameRequestKey</string>
+    <string name="bundleKey">bundleKey</string>
+    <string name="tel">tel:</string>
+    <string name="name_key_alt">nameKey</string>
+    <string name="phone_key_alt">phoneNumberKey</string>
+    <string name="id_key_alt">idKey</string>
+    <string name="deleted_msg">Contact deleted successfully</string>
+    <string name="text_type">text/plain</string>
+    <string name="contactNameKey">contactNameKey</string>
+    <string name="contactPhoneKey">contactPhoneKey</string>
+    <string name="contactIdKey">contactIdKey</string>
+    <string name="asc"> ASC</string>
 </resources>

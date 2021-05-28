@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PhoneContactsActivity">
+    tools:context=".PhoneContactsActivity"
+    android:id="@+id/phone_contacts_activity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"

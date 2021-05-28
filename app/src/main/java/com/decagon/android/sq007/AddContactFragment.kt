@@ -32,7 +32,7 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
             phoneNumber = binding?.etPhoneNumber?.text.toString()
 
             rootNode = FirebaseDatabase.getInstance()
-            reference = rootNode.getReference("contacts")
+            reference = rootNode.getReference(getString(R.string.fire_base_root_node_reference))
 
             id = reference.push().key.toString() // Generates a unique random id for each new contact
 
@@ -40,13 +40,13 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
             // a new contact that will be saved to our database
             val contactModel = ContactModel(id, name, phoneNumber)
             if (contactModel.fullName == "" || contactModel.contactNumber == "") {
-                Toast.makeText(context, "An empty field cannot be saved", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.empty_field_warning, Toast.LENGTH_SHORT).show()
             } else {
                 if (!Utils.phoneNumberValidator(phoneNumber)) { // Validates the phone number
-                    Toast.makeText(context, "Please, enter a valid phone number", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.invalid_phone_number_warning, Toast.LENGTH_SHORT).show()
                 } else {
                     reference.child(id).setValue(contactModel)
-                    Toast.makeText(context, "Contact saved successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.successful_save_msg, Toast.LENGTH_SHORT).show()
                     parentFragmentManager.popBackStack()
                 }
             }

@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.*
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -29,6 +30,11 @@ class PhoneContactsFragment : Fragment(R.layout.fragment_phone_contacts) {
         recyclerView!!.layoutManager = LinearLayoutManager(requireContext())
         recyclerView!!.setHasFixedSize(true)
         arrayList = arrayListOf()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         checkPermission()
     }
